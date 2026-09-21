@@ -245,7 +245,7 @@ Rechts steht eine Erwartung. Nur die linke Spalte geht hinaus.
 1. `scripts/marktdaten.sh` — Preis, 24h/7d, Allzeithoch, Marktkapitalisierung,
    Angst-und-Gier-Index (CoinGecko und alternative.me)
 2. Websuche zu Bitcoin-Nachrichten der letzten 24 Stunden
-   (bei der Sonntagspruefung: der letzten 48 Stunden)
+   (bei der Sonntagspruefung: der letzten 48 Stunden, also ab Freitagfrueh)
 3. Fuer Teil C zusaetzlich: anstehende Termine der naechsten 48 Stunden —
    Sitzungstermine der Notenbanken, Veroeffentlichungstermine von Konjunktur-
    daten, Fristen von Aufsichtsbehoerden, angesetzte Abstimmungen und Urteile

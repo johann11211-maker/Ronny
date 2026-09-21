@@ -9,15 +9,24 @@ eintritt, die in `referenz/Bitcoin-Kurs-Fallbeispiele.pdf` beschrieben wird.
 
 | Wann | Berlin | UTC (Sommerzeit) | UTC (Winterzeit) |
 |---|---|---|---|
-| Montag bis Freitag | 19:30 Uhr | `30 17 * * 1-5` | `30 18 * * 1-5` |
-| Sonntag | 20:00 Uhr | `0 18 * * 0` | `0 19 * * 0` |
+| Montag bis Freitag | 05:30 Uhr | `30 3 * * 1-5` | `30 4 * * 1-5` |
+| Sonntag | 05:30 Uhr | `30 3 * * 0` | `30 4 * * 0` |
 
 Die Zeitplaene laufen als Routines (Scheduled Triggers). Sie sind in UTC
 hinterlegt, deshalb gibt es zwei Varianten. Eine eigene Routine stellt zur
 Zeitumstellung um — Naeheres unten.
 
-**Samstag findet keine Pruefung statt.** Die Sonntagspruefung um 20 Uhr
-schaut deshalb ueber 48 Stunden zurueck und deckt den Samstag mit ab.
+**Samstag findet keine Pruefung statt.** Die Sonntagspruefung schaut deshalb
+ueber 48 Stunden zurueck: bis Freitagfrueh. Damit ist der letzte Handelstag
+der Woche und das ganze Wochenende abgedeckt, ohne Luecke zur Montagspruefung.
+
+Die Pruefung am fruehen Morgen hat eine Folge, die man kennen sollte: Die
+wichtigen US-Termine liegen am europaeischen Nachmittag und Abend — ein
+Zinsentscheid der Fed um 20 Uhr, US-Inflationsdaten um 14:30 Berliner Zeit.
+Diese Ereignisse fallen in das 24-Stunden-Fenster und gehen nicht verloren,
+sind bei der Meldung aber schon einige Stunden alt. Dafuer liegt die gesamte
+US-Sitzung und die Nacht vollstaendig im Rueckblick, und die Meldung kommt vor
+Tagesbeginn.
 
 ## Was gemeldet wird
 
@@ -74,8 +83,8 @@ meldet einen nicht erreichbaren Wert als `n/v`, statt abzubrechen.
 
 | Name | Trigger-ID | Zeitplan |
 |---|---|---|
-| Bitcoin-Ereignis-Check (Mo-Fr 19:30 Berlin) | `trig_01H3iBaizMRurLuoo2JZU2uH` | `30 17 * * 1-5` |
-| Bitcoin-Ereignis-Check (So 20:00 Berlin) | `trig_01Dpym8tMtfhGD3gNYhkvoLf` | `0 18 * * 0` |
+| Bitcoin-Ereignis-Check (Mo-Fr 05:30 Berlin) | `trig_01H3iBaizMRurLuoo2JZU2uH` | `30 3 * * 1-5` |
+| Bitcoin-Ereignis-Check (So 05:30 Berlin) | `trig_01Dpym8tMtfhGD3gNYhkvoLf` | `30 3 * * 0` |
 | Zeitumstellung auf Winterzeit (einmalig) | `trig_0191yW1GBs7ztU5tgH7BjR9p` | 25.10.2026, 10:00 UTC |
 
 Die Kriterien stecken vollstaendig im Prompt der beiden Pruef-Routines, nicht
@@ -85,7 +94,7 @@ hat diese Datei Vorrang — so lassen sich Schwellen aendern, ohne den Prompt
 anzufassen.
 
 Der Zeitpunkt streut um einige Minuten: der Planer weckt die Sitzung nicht
-sekundengenau. In der Praxis kommt die Meldung gegen 19:35 bzw. 20:05.
+sekundengenau. In der Praxis kommt die Meldung gegen 05:35.
 
 ## Zeitumstellung
 
@@ -103,8 +112,8 @@ Routine-Einstellungen die Cron-Ausdruecke tauschen:
 
 | | Sommerzeit (CEST) | Winterzeit (CET) |
 |---|---|---|
-| Mo-Fr 19:30 | `30 17 * * 1-5` | `30 18 * * 1-5` |
-| So 20:00 | `0 18 * * 0` | `0 19 * * 0` |
+| Mo-Fr 05:30 | `30 3 * * 1-5` | `30 4 * * 1-5` |
+| So 05:30 | `30 3 * * 0` | `30 4 * * 0` |
 
 ## Aufbau
 
