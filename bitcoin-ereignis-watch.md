@@ -11,8 +11,16 @@ was als Naechstes passiert und erst recht keine Handlungsempfehlung.
 ## Grundregel
 
 Gemeldet wird nur, wenn seit der letzten Pruefung **mindestens ein Kriterium aus
-Teil A oder Teil B** erfuellt ist. Ist nichts erfuellt, erfolgt **keine
+Teil A, Teil B oder Teil C** erfuellt ist. Ist nichts erfuellt, erfolgt **keine
 Benachrichtigung** — kein "heute nichts"-Signal, keine Zusammenfassung.
+
+Die drei Teile decken drei verschiedene Faelle ab:
+
+| Teil | Frage |
+|---|---|
+| A | Hat sich der **Kurs** deutlich bewegt? |
+| B | Ist ein **Ereignis** eingetreten, das den Kurs bewegt hat? |
+| C | Ist ein Ereignis eingetreten oder fest terminiert, das den Kurs bewegen **kann** — waehrend der Kurs noch stillhaelt? |
 
 Im Zweifel gilt: lieber nicht melden. Eine Meldung, die nichts Neues sagt,
 macht die naechste echte Meldung wertlos.
@@ -107,6 +115,95 @@ Ein Ereignis zaehlt nur, wenn es **neu** ist (seit der letzten Pruefung) und
 
 ---
 
+## Teil C — Ereignisse mit noch offener Kurswirkung
+
+Der wichtigste Teil fuer die Frueherkennung. Hier geht es um Ereignisse, die
+**bereits eingetreten oder fest terminiert** sind, bei denen der Kurs aber
+**noch nicht reagiert hat**. Das PDF beschreibt genau diese Luecke: „oft ist
+eine Nachricht schon im Kurs enthalten, bevor sie offiziell wird" — und
+umgekehrt gibt es Nachrichten, die der Markt noch nicht verarbeitet hat.
+
+**Bedingung:** Das Ereignis erfuellt eine der acht Arten aus Teil B, der Kurs
+hat sich aber in 24 Stunden um weniger als 3 % bewegt. Bewegt er sich staerker,
+greift ohnehin schon Teil A.
+
+**Harte Grenze:** Gemeldet wird nur, was **nachpruefbar geschehen oder fest
+terminiert** ist. Offen ist allein die Kursreaktion — niemals das Ereignis
+selbst. Vermutungen, Geruechte und Meinungen bleiben draussen (siehe „Nicht
+melden").
+
+### C1 — Fest terminierte Termine
+
+Kalenderfakten, kein Raten. Melden, wenn der Termin **in den naechsten
+48 Stunden** liegt:
+
+- Zinsentscheid der US-Notenbank oder der EZB, Protokolle, Anhoerungen
+- Veroeffentlichung von US-Inflationsdaten (CPI, PCE) und Arbeitsmarktdaten
+- Fristen von SEC oder anderen Aufsichtsbehoerden fuer ETF-Entscheidungen
+- Abstimmungen ueber Krypto-Gesetze, Gerichtsurteile mit Termin
+- Auslaufende Fristen bei Zoellen oder Handelsabkommen
+- Grosse Optionsverfalltermine, Quartalszahlen wichtiger Krypto-Unternehmen
+
+### C2 — Beschlossen, aber noch nicht wirksam
+
+- Ein Gesetz oder eine Regel ist verabschiedet, tritt aber spaeter in Kraft
+- Eine Uebergangsfrist laeuft ab
+- Ein angekuendigter Kauf oder Verkauf ist noch nicht ausgefuehrt
+- Eine Boerse oder ein Anbieter hat eine Aenderung angekuendigt
+
+### C3 — Eingetreten, aber noch nicht eingepreist
+
+- Ein Hack oder eine Insolvenz ist gerade gemeldet, der Markt reagiert noch nicht
+- ETF-Abfluesse oder -Zufluesse bauen sich ueber mehrere Tage auf
+- Eine Bank, ein Kreditgeber oder ein Miner steht erkennbar unter Druck
+- Ein Stablecoin weicht leicht, aber anhaltend von seiner Bindung ab
+- Eine Aufsichtsbehoerde hat ein Verfahren eroeffnet, ohne Entscheidung
+
+### C4 — Aufziehende Risiken mit belegbaren Zahlen
+
+Nur mit konkreter Zahl und Quelle, nie als Stimmungsbild:
+
+- Anleiherenditen oder Oelpreis mit deutlicher Bewegung (Teil B, Punkt 6)
+- Kredithebel baut sich auf: hohe Finanzierungsraten, steigendes Open Interest
+- Bestaende auf Boersen verschieben sich auffaellig
+- Hashrate faellt spuerbar
+- Angst-und-Gier-Index laeuft mehrere Tage in eine Richtung, ohne die
+  Extremwerte aus Teil A zu erreichen
+
+### Wiederholungen vermeiden
+
+Die Pruefungen haben kein Gedaechtnis — jeder Lauf startet neu. Damit ein
+Termin nicht taeglich gemeldet wird, gilt stateless:
+
+- **C1:** nur melden, wenn der Termin in den naechsten 48 Stunden liegt.
+  Das ergibt hoechstens ein bis zwei Hinweise vor dem Termin.
+- **C2 bis C4:** nur melden, wenn die Nachricht **innerhalb des Rueckblick-
+  fensters** neu aufgekommen ist (24 h werktags, 48 h sonntags) oder wenn sich
+  ihr Stand seitdem messbar geaendert hat — etwa Abfluesse, die sich
+  fortsetzen, oder eine Abweichung, die groesser wird.
+
+Ein reiner Kalenderhinweis ohne Neuigkeit bleibt **einzeilig**.
+
+### Kennzeichnung
+
+Meldungen aus Teil C werden klar als solche markiert, damit sie nicht mit einer
+tatsaechlichen Kursbewegung verwechselt werden:
+
+```
+[VORLAUF | Ereignisart] Was steht an oder ist geschehen — mit Datum und Zahl
+Stand:        Was der Kurs bisher gemacht hat (meist: keine klare Reaktion)
+Moegliche Richtung: nach oben oder nach unten, mit dem Vergleichsfall aus dem
+              PDF begruendet — ausdruecklich keine Prognose, sondern die
+              Richtung, in die der Kurs in vergleichbaren Faellen lief
+Quelle:       Name und Link
+```
+
+Die Zeile „Moegliche Richtung" beschreibt ausschliesslich, wie der Kurs in den
+historischen Vergleichsfaellen reagiert hat. Sie sagt nicht, was diesmal
+passieren wird, und enthaelt nie eine Handlungsempfehlung.
+
+---
+
 ## „Buy the rumor, sell the news"
 
 Das PDF widmet diesem Muster einen eigenen Abschnitt. Wenn ein lange erwartetes
@@ -128,6 +225,19 @@ Zinserhoehung September 2026.
 - Bewegungen unterhalb der Schwellen aus Teil A
 - Alles, was nach Werbung oder nach einem bezahlten Beitrag aussieht
 
+**Besonders wichtig seit Teil C.** Die Frueherkennung ist keine Einladung zum
+Spekulieren. Der Unterschied:
+
+| Meldenswert (Teil C) | Nicht meldenswert |
+|---|---|
+| „Die Fed entscheidet uebermorgen ueber den Leitzins." | „Analysten erwarten eine Zinserhoehung." |
+| „Die SEC-Frist fuer diesen ETF laeuft am Freitag ab." | „Der ETF wird wahrscheinlich zugelassen." |
+| „Die ETFs verzeichnen den vierten Tag in Folge Abfluesse, zusammen 1,2 Mrd. Dollar." | „Das Geld koennte weiter abfliessen." |
+| „Die Hashrate ist in zwei Wochen um 15 % gefallen." | „Minern droht Druck." |
+
+Links steht jeweils eine **nachpruefbare Tatsache oder ein Kalendertermin**.
+Rechts steht eine Erwartung. Nur die linke Spalte geht hinaus.
+
 ---
 
 ## Quellen fuer die Pruefung
@@ -136,7 +246,10 @@ Zinserhoehung September 2026.
    Angst-und-Gier-Index (CoinGecko und alternative.me)
 2. Websuche zu Bitcoin-Nachrichten der letzten 24 Stunden
    (bei der Sonntagspruefung: der letzten 48 Stunden)
-3. Gegenpruefung jeder Meldung an einer **zweiten, unabhaengigen Quelle**,
+3. Fuer Teil C zusaetzlich: anstehende Termine der naechsten 48 Stunden —
+   Sitzungstermine der Notenbanken, Veroeffentlichungstermine von Konjunktur-
+   daten, Fristen von Aufsichtsbehoerden, angesetzte Abstimmungen und Urteile
+4. Gegenpruefung jeder Meldung an einer **zweiten, unabhaengigen Quelle**,
    bevor sie hinausgeht
 
 Alle Zahlen in US-Dollar.

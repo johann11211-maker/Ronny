@@ -24,12 +24,27 @@ schaut deshalb ueber 48 Stunden zurueck und deckt den Samstag mit ab.
 Die pruefbaren Kriterien stehen in **[`bitcoin-ereignis-watch.md`](bitcoin-ereignis-watch.md)**.
 Kurz gefasst:
 
-- **Kursbewegung:** ± 5 % in 24 h, ± 10 % in 7 Tagen, neues Allzeithoch oder
-  52-Wochen-Tief, runde 10.000er-Marke, Angst-und-Gier-Index unter 20 oder
-  ueber 80
-- **Ereignisse:** die acht Arten aus dem PDF — Pleiten und Hacks, Verbote,
-  neue Anlageprodukte, grosse Kaeufer, Zinsen und Geldmenge, weltpolitische
-  Schocks, Halving und Angebot, Stimmung und Kredithebel
+| Teil | Frage | Beispiel |
+|---|---|---|
+| **A** Kursbewegung | Hat sich der Kurs deutlich bewegt? | ± 5 % in 24 h, ± 10 % in 7 Tagen, neues Allzeithoch, runde 10.000er-Marke |
+| **B** Ereignis mit Kurswirkung | Ist etwas geschehen, das den Kurs bewegt hat? | die acht Arten aus dem PDF — Pleiten und Hacks, Verbote, neue Anlageprodukte, grosse Kaeufer, Zinsen, weltpolitische Schocks, Angebot, Kredithebel |
+| **C** Ereignis mit offener Kurswirkung | Ist etwas geschehen oder fest terminiert, das den Kurs bewegen *kann*, waehrend er noch stillhaelt? | Zinsentscheid uebermorgen, ablaufende SEC-Frist, vierter Tag ETF-Abfluesse, fallende Hashrate |
+
+**Teil C ist die Frueherkennung.** Er greift, wenn ein Ereignis der acht Arten
+vorliegt, der Kurs sich aber um weniger als 3 % bewegt hat (sonntags 4 %).
+Solche Meldungen sind mit `[VORLAUF]` gekennzeichnet und nennen die Richtung,
+in die der Kurs in vergleichbaren historischen Faellen lief — als Einordnung,
+nicht als Prognose.
+
+Die Grenze zu Spekulation ist hart gezogen: Gemeldet wird nur, was
+**nachpruefbar geschehen oder fest terminiert** ist. Offen ist allein die
+Kursreaktion, nie das Ereignis selbst.
+
+| Geht hinaus | Bleibt draussen |
+|---|---|
+| „Die Fed entscheidet uebermorgen." | „Analysten erwarten eine Zinserhoehung." |
+| „Die SEC-Frist laeuft am Freitag ab." | „Der ETF wird wahrscheinlich zugelassen." |
+| „Vierter Tag Abfluesse, zusammen 1,2 Mrd. $." | „Das Geld koennte weiter abfliessen." |
 
 Ist nichts davon eingetreten, **kommt keine Benachrichtigung**. Kein
 "heute nichts"-Signal.
