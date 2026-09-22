@@ -2,14 +2,14 @@
 
 Ein 16:9-Rahmen zum Ueberlegen ueber die Webcam: schwarz-grau gemischter
 Rand, unten eine schwarze Leiste mit eingraviertem Schriftzug. Der Schriftzug
-leuchtet alle 10 Sekunden langsam hell-orange auf und blendet wieder aus --
-die Gravur selbst bleibt dabei immer sichtbar, sodass in der dunklen Phase
-der Abdruck im Material stehen bleibt. Von den 10 Sekunden leuchtet der
-Zug rund 7,2 Sekunden, davon 4 Sekunden in voller Helligkeit.
+leuchtet einmal je Durchlauf langsam hell-orange auf und blendet wieder aus
+-- die Gravur selbst bleibt dabei immer sichtbar, sodass in der dunklen Phase
+der Abdruck im Material stehen bleibt. Ein Durchlauf dauert 20 Sekunden;
+davon leuchtet der Zug 14,4 Sekunden, knapp 10 davon in voller Helligkeit.
 
 Das Video ist eine geschlossene Schleife: der letzte Frame ist Bit fuer Bit
 derselbe wie der erste, und beide liegen in der dunklen Phase, die den
-Schleifenpunkt mit 2,2 Sekunden umschliesst. Beim Zuruecksetzen ist also
+Schleifenpunkt mit 4,8 Sekunden umschliesst. Beim Zuruecksetzen ist also
 kein Sprung zu sehen.
 
 ## Fertige Dateien
@@ -18,7 +18,7 @@ Alles unter `out/`:
 
 | Datei | Wofuer |
 |---|---|
-| `awenhd-facecam-frame.webm` | **Das Overlay.** VP9 verlustfrei mit Alphakanal, 1920×1080, 30 fps, 10 s. Fuer OBS, Streamlabs, Browser. |
+| `awenhd-facecam-frame.webm` | **Das Overlay.** VP9 verlustfrei mit Alphakanal, 1920×1080, 30 fps, 20 s. Fuer OBS, Streamlabs, Browser. |
 | `awenhd-facecam-frame-vorschau.mp4` | Nur zum Anschauen: derselbe Rahmen ueber einem Platzhalter statt der Kamera, ohne Transparenz. |
 | `awenhd-facecam-frame-an.png` | Standbild mit voll leuchtendem Schriftzug, mit Alphakanal. |
 | `awenhd-facecam-frame-aus.png` | Standbild in der dunklen Phase -- zeigt die Gravur ohne Leuchten. |
@@ -56,7 +56,7 @@ Nuetzliche Schalter:
 | Schalter | Standard | Wirkung |
 |---|---|---|
 | `--text` | `AwenHD` | Schriftzug in der Leiste |
-| `--cycle` | `10` | Sekunden pro Durchlauf |
+| `--cycle` | `20` | Sekunden pro Durchlauf |
 | `--fps` | `30` | Bildrate |
 | `--width` / `--height` | `1920` / `1080` | Aussenmass |
 | `--side` / `--top` / `--bar` | `34` / `34` / `104` | Randbreiten und Hoehe der Leiste |
@@ -65,7 +65,7 @@ Nuetzliche Schalter:
 | `--frame-dark` / `--frame-light` | `0.04` / `0.345` | Hell-Dunkel-Spanne des Randes |
 | `--bar-dark` / `--bar-light` | `0.016` / `0.098` | dasselbe fuer die schwarze Leiste |
 | `--engrave-depth` / `--engrave-catch` | `0.10` / `0.08` | Tiefe und Lichtkante der Gravur |
-| `--dark-lead` / `--fade-in` / `--hold` / `--fade-out` | `1.2` / `2.0` / `3.4` / `2.4` | Zeiten des Leucht-Zyklus in Sekunden |
+| `--dark-lead` / `--fade-in` / `--hold` / `--fade-out` | `2.0` / `2.8` / `9.0` / `3.4` | Zeiten des Leucht-Zyklus in Sekunden |
 | `--seed` | `7` | anderer Wert = andere Maserung im Rand |
 | `--still-only` | | nur Standbilder, keine Videos (schnell zum Ausprobieren) |
 | `--webm-crf` | | verlustbehaftet kodieren, z. B. `20` fuer knapp 0,5 MB |
@@ -74,6 +74,15 @@ Die Zeiten des Zyklus muessen zusammen in `--cycle` passen; was uebrig
 bleibt, ist die dunkle Phase am Ende. Beide dunklen Phasen umschliessen den
 Schleifenpunkt, deshalb bleibt die Naht unsichtbar, solange etwas uebrig
 bleibt. Das Skript bricht ab, wenn die Phasen laenger sind als der Zyklus.
+
+`--cycle` allein macht den Zug nicht laenger sichtbar: die Blendphasen
+bleiben dabei, wie sie sind, und die zusaetzliche Zeit landet vollstaendig
+in der dunklen Pause. Wer den Takt aendert, passt `--hold` mit an. Fuer
+einen 30-Sekunden-Durchlauf zum Beispiel:
+
+```bash
+python3 render_facecam_frame.py --out-dir out --cycle 30 --hold 19
+```
 
 ## Wie es gebaut ist
 
@@ -102,4 +111,4 @@ bleibt. Das Skript bricht ab, wenn die Phasen laenger sind als der Zyklus.
 
 Der Rahmen selbst wird einmal berechnet, pro Frame kommt nur das Leuchten
 dazu. Die Frames der dunklen Phase sind identisch und werden nur einmal
-erzeugt. Ein kompletter Durchlauf dauert rund 40 Sekunden.
+erzeugt. Ein kompletter Durchlauf dauert rund 80 Sekunden.

@@ -447,8 +447,8 @@ def parse_args(argv):
     p.add_argument("--width", type=int, default=1920)
     p.add_argument("--height", type=int, default=1080)
     p.add_argument("--fps", type=int, default=30)
-    p.add_argument("--cycle", type=float, default=10.0,
-                   help="Sekunden pro Durchlauf (Standard 10)")
+    p.add_argument("--cycle", type=float, default=20.0,
+                   help="Sekunden pro Durchlauf (Standard 20)")
     p.add_argument("--out-dir", default="out")
     p.add_argument("--name", default="awenhd-facecam-frame")
     p.add_argument("--still-only", action="store_true",
@@ -486,11 +486,11 @@ def parse_args(argv):
     p.add_argument("--engrave-catch", type=float, default=0.080)
 
     # Animation
-    p.add_argument("--dark-lead", type=float, default=1.2,
+    p.add_argument("--dark-lead", type=float, default=2.0,
                    help="dunkle Phase am Zyklusanfang")
-    p.add_argument("--fade-in", type=float, default=2.0)
-    p.add_argument("--hold", type=float, default=3.4)
-    p.add_argument("--fade-out", type=float, default=2.4)
+    p.add_argument("--fade-in", type=float, default=2.8)
+    p.add_argument("--hold", type=float, default=9.0)
+    p.add_argument("--fade-out", type=float, default=3.4)
 
     cfg = p.parse_args(argv)
     cfg.glow_rgb = (1.00, 0.640, 0.290)   # helles Orange
