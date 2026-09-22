@@ -289,8 +289,10 @@ def build_frame(cfg):
 
     # Gravur: obere Kante im Schatten, untere Kante im Licht -- der Abdruck
     # bleibt dauerhaft sichtbar, auch wenn das Leuchten ganz aus ist.
-    soft = blur(text_mask, 0.6)
-    relief = blur(shift(soft, -1, -1), 1.0) - blur(shift(soft, 1, 1), 1.0)
+    step = max(1, int(round(cap / 26.0)))
+    soft = blur(text_mask, 0.6 * step)
+    relief = (blur(shift(soft, -step, -step), 1.0 * step)
+              - blur(shift(soft, step, step), 1.0 * step))
     engrave = np.clip(relief, 0.0, None)   # oben links: Schatten
     catch = np.clip(-relief, 0.0, None)    # unten rechts: Lichtkante
 
@@ -476,7 +478,7 @@ def parse_args(argv):
     p.add_argument("--bar-light", type=float, default=0.098)
 
     # Schrift
-    p.add_argument("--text-height", type=float, default=0.36,
+    p.add_argument("--text-height", type=float, default=0.50,
                    help="Versalhoehe als Anteil der Leistenhoehe")
     p.add_argument("--tracking", type=float, default=0.30,
                    help="Sperrung, als Anteil der Versalhoehe")
@@ -484,10 +486,10 @@ def parse_args(argv):
     p.add_argument("--engrave-catch", type=float, default=0.080)
 
     # Animation
-    p.add_argument("--dark-lead", type=float, default=2.0,
+    p.add_argument("--dark-lead", type=float, default=1.2,
                    help="dunkle Phase am Zyklusanfang")
-    p.add_argument("--fade-in", type=float, default=1.8)
-    p.add_argument("--hold", type=float, default=1.6)
+    p.add_argument("--fade-in", type=float, default=2.0)
+    p.add_argument("--hold", type=float, default=3.4)
     p.add_argument("--fade-out", type=float, default=2.4)
 
     cfg = p.parse_args(argv)

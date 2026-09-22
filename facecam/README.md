@@ -4,11 +4,13 @@ Ein 16:9-Rahmen zum Ueberlegen ueber die Webcam: schwarz-grau gemischter
 Rand, unten eine schwarze Leiste mit eingraviertem Schriftzug. Der Schriftzug
 leuchtet alle 10 Sekunden langsam hell-orange auf und blendet wieder aus --
 die Gravur selbst bleibt dabei immer sichtbar, sodass in der dunklen Phase
-der Abdruck im Material stehen bleibt.
+der Abdruck im Material stehen bleibt. Von den 10 Sekunden leuchtet der
+Zug rund 7,2 Sekunden, davon 4 Sekunden in voller Helligkeit.
 
 Das Video ist eine geschlossene Schleife: der letzte Frame ist Bit fuer Bit
-derselbe wie der erste, und beide liegen mitten in der 4,2 Sekunden langen
-dunklen Phase. Beim Zuruecksetzen ist also kein Sprung zu sehen.
+derselbe wie der erste, und beide liegen in der dunklen Phase, die den
+Schleifenpunkt mit 2,2 Sekunden umschliesst. Beim Zuruecksetzen ist also
+kein Sprung zu sehen.
 
 ## Fertige Dateien
 
@@ -58,12 +60,12 @@ Nuetzliche Schalter:
 | `--fps` | `30` | Bildrate |
 | `--width` / `--height` | `1920` / `1080` | Aussenmass |
 | `--side` / `--top` / `--bar` | `34` / `34` / `104` | Randbreiten und Hoehe der Leiste |
-| `--text-height` | `0.36` | Versalhoehe, als Anteil der Leistenhoehe |
+| `--text-height` | `0.50` | Versalhoehe, als Anteil der Leistenhoehe |
 | `--tracking` | `0.30` | Sperrung zwischen den Buchstaben |
 | `--frame-dark` / `--frame-light` | `0.04` / `0.345` | Hell-Dunkel-Spanne des Randes |
 | `--bar-dark` / `--bar-light` | `0.016` / `0.098` | dasselbe fuer die schwarze Leiste |
 | `--engrave-depth` / `--engrave-catch` | `0.10` / `0.08` | Tiefe und Lichtkante der Gravur |
-| `--dark-lead` / `--fade-in` / `--hold` / `--fade-out` | `2.0` / `1.8` / `1.6` / `2.4` | Zeiten des Leucht-Zyklus in Sekunden |
+| `--dark-lead` / `--fade-in` / `--hold` / `--fade-out` | `1.2` / `2.0` / `3.4` / `2.4` | Zeiten des Leucht-Zyklus in Sekunden |
 | `--seed` | `7` | anderer Wert = andere Maserung im Rand |
 | `--still-only` | | nur Standbilder, keine Videos (schnell zum Ausprobieren) |
 | `--webm-crf` | | verlustbehaftet kodieren, z. B. `20` fuer knapp 0,5 MB |
@@ -88,7 +90,8 @@ bleibt. Das Skript bricht ab, wenn die Phasen laenger sind als der Zyklus.
 - **Gravur**: der Schriftzug wird zweifach versetzt weichgezeichnet und
   voneinander abgezogen. Die obere linke Kante wird abgedunkelt, die untere
   rechte aufgehellt -- so liegt der Zug sichtbar im Material, auch ohne
-  Leuchten.
+  Leuchten. Der Versatz waechst mit der Versalhoehe mit, damit der Abdruck
+  bei grossem Schriftzug nicht duenn wirkt.
 - **Leuchten**: zwei Ebenen, warmes Orange linear und ein heisserer Kern
   quadratisch zur Intensitaet, dazu vier Weichzeichner-Stufen als Schein.
   Beides ist auf die Rahmenflaeche maskiert, damit nichts ins Kamerabild
